@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api", "api\api.csproj", "{05C925B0-E6B0-4907-AC43-7BC600D1C628}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScenesApi", "api\ScenesApi.csproj", "{05C925B0-E6B0-4907-AC43-7BC600D1C628}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pecanha.Repository", "Pecanha.Repository\Pecanha.Repository.csproj", "{D51D14AC-7871-409A-8A8B-B85153C69826}"
 EndProject
