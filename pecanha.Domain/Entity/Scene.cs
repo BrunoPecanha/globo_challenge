@@ -1,8 +1,8 @@
 ﻿using Pecanha.Domain.Enum;
 
 namespace Pecanha.Domain.Entity {
-    public class Cena : To {
+    public class Scene : To {
         public string Nome { get; set; }
-        public EstadoEnum Estado { get; set; }
+        public StateEnum Estado { get; set; }
     }
 }

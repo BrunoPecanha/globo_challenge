@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 
 namespace Pecanha.Domain.Enum {
-    public enum EstadoEnum {
+    public enum StateEnum {
         [Description("Pendente")]
         Pendente = 1,
         [Description("Preparada")]
