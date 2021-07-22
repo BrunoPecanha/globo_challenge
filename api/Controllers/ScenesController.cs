@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace api.Controllers {
     [Route("api")]
-    public class CenaController : Controller {
+    public class ScenesController : Controller {
         /// <summary>
         /// Endpoint para criação do pedido de cena
         /// </summary>
