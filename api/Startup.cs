@@ -1,9 +1,12 @@
 using api.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Pecanha.Repository.Context;
+using Pecanha.Service.Extensions;
 
 namespace api {
     public class Startup {
@@ -15,6 +18,9 @@ namespace api {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            var dbConnectionString = Configuration.GetConnectionString("sqlLiteConnection");
+            services.AddDbContextPool<SceneContext>(options => options.UseSqlite(dbConnectionString));
+            services.RegisterServices(Configuration.GetConnectionString(dbConnectionString));
             services.AddControllers();
             services.AddSwaggerGen();
         }
