@@ -1,23 +1,43 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pecanha.Domain;
+using Pecanha.Domain.Commands;
 using System.Threading.Tasks;
 
 namespace api.Controllers {
     [Route("api")]
     public class ScenesController : Controller {
+        private readonly ISceneService _service;
+        private readonly ISceneRepository _repository;
+
+        public ScenesController(ISceneService service, ISceneRepository repository) {
+            _repository = repository;
+            _service = service;
+        }
+
         /// <summary>
-        /// Endpoint para criação do pedido de cena
+        /// Endpoint para recuperação das cenas cadastradas
+        /// </summary>
+        [HttpGet("id")]
+        public async Task<IActionResult> Get(int id) {
+            return View();
+        }
+
+        /// <summary>
+        /// Endpoint para recuperação das cenas cadastradas
         /// </summary>
         [HttpGet]
         public async Task<IActionResult> Get() {
-            return View();
+            var listaScenes =  _repository.GetAll();
+            return Ok(listaScenes);
         }
 
         /// <summary>
         /// Endpoint para criação do pedido de cena
         /// </summary>
         [HttpPost]        
-        public async Task<IActionResult> Add() {
-            return View();
+        public async Task<IActionResult> Add([FromBody] SceneCommand command) {
+            _service.Create(command);
+            return Ok();
         }
 
         /// <summary>
