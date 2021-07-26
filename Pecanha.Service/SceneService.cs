@@ -1,6 +1,7 @@
 ﻿using Pecanha.Domain;
 using Pecanha.Domain.Commands;
 using Pecanha.Domain.Entity;
+using System;
 
 namespace Pecanha.Service {
     public class SceneService : ServiceBase<Scene>, ISceneService {
@@ -10,12 +11,17 @@ namespace Pecanha.Service {
             _repository = repository;
         }
 
-        public void ChangeState(SceneCommand sceneCommand) {
+        public bool ChangeState(SceneUpdateCommand sceneCommand) {
             throw new System.NotImplementedException();
         }
 
-        public void Create(SceneCommand sceneCommand) {
-            _repository.Add(sceneCommand.CreteScene(sceneCommand.SceneName));           
+        public Scene Create(SceneCreateCommand sceneCommand) {
+            var scene = sceneCommand.CreteScene(sceneCommand.Name);
+            if (scene is null)
+                throw new Exception("Não é permitido nome vazio.");
+
+            _repository.Add(scene);
+            return scene;
         }
     }
 }

@@ -3,7 +3,7 @@ using Pecanha.Domain.Entity;
 
 namespace Pecanha.Domain {
     public interface ISceneService :  IServiceBase<Scene> {
-        public void Create(SceneCommand sceneCommand);
-        public void ChangeState(SceneCommand sceneCommand);
+        public Scene Create(SceneCreateCommand sceneCommand);
+        public bool ChangeState(SceneUpdateCommand sceneCommand);
     }
 }

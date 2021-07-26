@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pecanha.Domain;
 using Pecanha.Domain.Commands;
-using System.Threading.Tasks;
+using Pecanha.Service.Containers;
+using System;
 
 namespace api.Controllers {
     [Route("api")]
@@ -15,37 +16,51 @@ namespace api.Controllers {
         }
 
         /// <summary>
-        /// Endpoint para recuperação das cenas cadastradas
+        /// Endpoint para recuperação das cenas cadastradas por id
         /// </summary>
         [HttpGet("id")]
-        public async Task<IActionResult> Get(int id) {
-            return View();
+        public IActionResult Get([FromHeader] int id) {
+            return Ok(_repository.GetById(id));
         }
 
         /// <summary>
         /// Endpoint para recuperação das cenas cadastradas
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> Get() {
-            var listaScenes =  _repository.GetAll();
-            return Ok(listaScenes);
+        public IActionResult Get() {
+            return Ok(_repository.GetAll());
         }
 
         /// <summary>
         /// Endpoint para criação do pedido de cena
         /// </summary>
-        [HttpPost]        
-        public async Task<IActionResult> Add([FromBody] SceneCommand command) {
-            _service.Create(command);
-            return Ok();
+        [HttpPost]
+        public IActionResult Add([FromBody] SceneCreateCommand command) {
+            try {
+                var scene = _service.Create(command);
+                return Ok(
+                   new ContainerResult() {
+                       Id = scene.Id,
+                       Valid = true,
+                       Log = scene
+                   }
+                );
+            } catch (Exception ex) {
+                return BadRequest(
+                    new ContainerResult() {
+                        Valid = false,
+                        Message = ex.Message
+                    }
+                );
+            }
         }
 
         /// <summary>
         /// Endpoint para atualização do estado da cena
         /// </summary>
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery]int id, int estado) {
-            return View();
+        public IActionResult Update([FromQuery] int id, int estado, DateTime operationHour) {
+            return null;
         }
     }
 }
