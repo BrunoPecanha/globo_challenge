@@ -7,9 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScenesApi", "api\ScenesApi.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pecanha.Repository", "Pecanha.Repository\Pecanha.Repository.csproj", "{D51D14AC-7871-409A-8A8B-B85153C69826}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pecanha.Domain", "Pecanha.Domain\Pecanha.Domain.csproj", "{3A098058-EA05-42B1-819A-EA5A7FC964E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pecanha.Domain", "Pecanha.Domain\Pecanha.Domain.csproj", "{3A098058-EA05-42B1-819A-EA5A7FC964E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pecanha.Service", "Pecanha.Service\Pecanha.Service.csproj", "{D0A9515E-2B2D-4EDB-98E6-09AC56431C7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pecanha.Service", "Pecanha.Service\Pecanha.Service.csproj", "{D0A9515E-2B2D-4EDB-98E6-09AC56431C7F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D51D14AC-7871-409A-8A8B-B85153C69826} = {D51D14AC-7871-409A-8A8B-B85153C69826}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
