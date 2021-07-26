@@ -10,12 +10,12 @@ namespace Pecanha.Repository {
             _dbContext = dbContext;
         }
 
-        public void ChangeState(SceneCommand sceneCommand) {
+        public void ChangeState(SceneCreateCommand sceneCommand) {
             throw new System.NotImplementedException();
         }
 
-        public void Create(SceneCommand sceneCommand) {
-            _dbContext.Scene.Add(sceneCommand.CreteScene(sceneCommand.SceneName));           
+        public void Create(SceneCreateCommand sceneCommand) {
+            _dbContext.Scene.Add(sceneCommand.CreteScene(sceneCommand.Name));           
         }
     }
 }

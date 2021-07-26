@@ -22,7 +22,7 @@ namespace Pecanha.Repository.EntityConfig {
 
             builder
             .Property(c => c.Name)
-            .HasColumnName("Name");
+            .HasColumnName("Name");        
 
             builder
            .Property(c => c.State)

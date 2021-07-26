@@ -9,8 +9,11 @@ namespace Pecanha.Domain.Entity {
 
         public Scene(string name) {
             Name = name;
-            State = StateEnum.Pendente;
-            RecordHistory = new List<RecordHistory>();
+            State = StateEnum.Pendente;           
+        }
+
+        public void UpdateScene(StateEnum state) {
+            
         }
     }
 }
