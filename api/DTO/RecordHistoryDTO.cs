@@ -3,9 +3,9 @@ using System;
 
 namespace ScenesApi.DTO {
     public class RecordHistortyDTO {
-        public int SceneId { get; set; }      
-        public State PreviousState { get; set; }
+        public int SceneId { get; set; }
         public State ActualState { get; set; }
+        public State PreviousState { get; set; }        
         public DateTime OperationDate { get; set; }
 
         public RecordHistortyDTO(RecordHistory history) {
