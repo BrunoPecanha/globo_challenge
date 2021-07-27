@@ -16,6 +16,8 @@ namespace Pecanha.Repository {
         public SceneRepository(ISceneContext dbContext) {
             _dbContext = dbContext;
         }
+
+        //F2. Listar cenas com seus estados atuais;
         public CommandResult GetAll(int? page, int? qtd) {
             try {
                 var scene = _dbContext.Scene.Skip((int)page * (int)qtd)
@@ -33,6 +35,8 @@ namespace Pecanha.Repository {
                 return new CommandResult(false, true, ex.Message, null);
             }
         }
+
+        //F3. Obter dado de uma cena específica.
         public CommandResult GetById(int id) {
             try {
                 var scene = _dbContext.Scene
@@ -49,23 +53,6 @@ namespace Pecanha.Repository {
                 return new CommandResult(false, true, ex.Message, null);
             }
         }
-        public CommandResult GetRecordHistoryById(int id) {
-            try {
-                var history = _dbContext.RecordHistory
-                                        .Where(x => x.SceneId == id)
-                                        .OrderByDescending(x => x.OperationHour)
-                                        .AsNoTracking()
-                                        .ToList();
-
-                if (history.Count() < 1) {
-                    return new CommandResult(true, false, _msgNoChanges, null);
-                }               
-
-                return new CommandResult(true, false, string.Empty, history);
-
-            } catch (Exception ex) {
-                return new CommandResult(false, true, ex.Message, null);
-            }
-        }
+       
     }
 }

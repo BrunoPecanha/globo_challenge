@@ -7,13 +7,16 @@ using System.Collections.Generic;
 
 namespace api.Controllers {
     [Route("api")]
+    //F1.Controlar estados de cenas;
     public class ScenesController : Controller {
         private readonly ISceneService _service;
-        private readonly ISceneRepository _repository;
+        private readonly ISceneRepository _sceneRepository;
+        private readonly IRecordHistoryRepository _recordHistoryRepository;
 
-        public ScenesController(ISceneService service, ISceneRepository repository) {
-            _repository = repository;
+        public ScenesController(ISceneService service, ISceneRepository repository, IRecordHistoryRepository recordHistoryRepository) {
+            _sceneRepository = repository;
             _service = service;
+            _recordHistoryRepository = recordHistoryRepository;
         }
 
         /// <summary>
@@ -22,7 +25,7 @@ namespace api.Controllers {
         [HttpGet("history")]
         public IActionResult GetHistory([FromQuery] int id) {
             List<RecordHistortyDTO> recordList = new List<RecordHistortyDTO>();
-            var ret = _repository.GetRecordHistoryById(id);
+            var ret = _recordHistoryRepository.GetRecordHistoryById(id);
 
             if (ret.Log != null)
                 (ret.Log as List<RecordHistory>).ForEach(x => recordList.Add(new RecordHistortyDTO(x)));
@@ -40,7 +43,7 @@ namespace api.Controllers {
         /// </summary>
         [HttpGet("id")]
         public IActionResult Get([FromQuery] int id) {
-            var ret = _repository.GetById(id);
+            var ret = _sceneRepository.GetById(id);
             if (ret.Valid && ret.Log != null)
                 return Ok(ret);
             else if (ret.Valid && !ret.Error)
@@ -54,7 +57,7 @@ namespace api.Controllers {
         /// </summary>
         [HttpGet]
         public IActionResult GetAll([FromQuery] int page = 0, int qtt = 10) {
-            var ret = _repository.GetAll(page, qtt);
+            var ret = _sceneRepository.GetAll(page, qtt);
             if (ret.Valid && ret.Log != null)
                 return Ok(ret);
             else if (ret.Valid && !ret.Error)

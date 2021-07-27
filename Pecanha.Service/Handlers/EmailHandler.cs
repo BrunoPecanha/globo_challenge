@@ -1,17 +1,20 @@
-﻿using System.Net;
+﻿using Pecanha.Domain.Entity;
+using Pecanha.Service.Properties;
+using System;
+using System.Net;
 using System.Net.Mail;
 using static Pecanha.Service.Helpers.ConfigHelper;
 
 namespace Pecanha.Service.Handlers {
     public class EmailHandler {
-        public static bool SendEmail(string remetente, string assunto, string corpoEmail) {
+        public static bool SendEmail(Scene scene) {
             bool ret = true;
             try {
                 Config config = GetEmailSendConfiguration();
                 SmtpClient smtpClient = null;
-                smtpClient = BuildSmtpClient(config);
+                smtpClient = BuildSmtpClient(config);            
 
-                MailMessage message = BuildEmailMessage(assunto, config, corpoEmail, remetente);
+                MailMessage message = BuildEmailMessage(Resources.Assunto, config, string.Format(Resources.EmailBody, scene.Id, scene.Name, scene.State.ToString(), DateTime.Now.ToString("hh:mm"), config.FromAddress), config.FromAddress);
                 message.To.Add(config.AddressTo);
                 smtpClient.Send(message);
             } catch {
