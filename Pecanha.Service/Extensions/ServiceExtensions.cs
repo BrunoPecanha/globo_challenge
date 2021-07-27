@@ -13,10 +13,8 @@ namespace Pecanha.Service.Extensions {
 
             //Entidadades
             services.AddTransient<ISceneService, SceneService>();
-            services.AddTransient<ISceneRepository, SceneRepository>();
-
-            //services.AddTransient<IRecordHistoryService, RecordHistoryService>();
-            //services.AddTransient<IRecordHistoryRepository, RecordHistoryRepository>();
+            services.AddTransient<ISceneRepository, SceneRepository>();        
+            services.AddTransient<IRecordHistoryRepository, RecordHistoryRepository>();
 
             return services;
         }
