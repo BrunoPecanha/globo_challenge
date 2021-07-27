@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pecanha.Service", "Pecanha.
 		{D51D14AC-7871-409A-8A8B-B85153C69826} = {D51D14AC-7871-409A-8A8B-B85153C69826}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pecanha.Test", "Pecanha.Teste\Pecanha.Test.csproj", "{A5009CB4-B2D3-4C76-8B67-DBE1D4660FC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{D0A9515E-2B2D-4EDB-98E6-09AC56431C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0A9515E-2B2D-4EDB-98E6-09AC56431C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0A9515E-2B2D-4EDB-98E6-09AC56431C7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5009CB4-B2D3-4C76-8B67-DBE1D4660FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5009CB4-B2D3-4C76-8B67-DBE1D4660FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5009CB4-B2D3-4C76-8B67-DBE1D4660FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5009CB4-B2D3-4C76-8B67-DBE1D4660FC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
