@@ -1,17 +1,16 @@
 ﻿using Pecanha.Domain;
 using System;
-using System.Collections.Generic;
 
 namespace Pecanha.Service {
-    public class ServiceBase<TEntity> : IDisposable, IServiceBase<TEntity> where TEntity : class {
+    public class ServiceBase<T> : IDisposable, IServiceBase<T> where T : class {
 
-        private readonly IRepositoryBase<TEntity> _repository;
+        private readonly IRepositoryBase<T> _repository;
 
         /// <summary>
         /// IoC
         /// </summary>
         /// <param name="repository">Instância de repositorio.</param>
-        public ServiceBase(IRepositoryBase<TEntity> repository) {
+        public ServiceBase(IRepositoryBase<T> repository) {
             _repository = repository;
         }
 
@@ -19,7 +18,7 @@ namespace Pecanha.Service {
         /// Adiciona um objeto T.
         /// </summary>
         /// <param name="obj">Objeto.</param>
-        public void Add(TEntity obj) {
+        public void Add(T obj) {
             _repository.Add(obj);
         }
 
@@ -28,33 +27,13 @@ namespace Pecanha.Service {
         /// </summary>
         public void Dispose() {
             _repository.Dispose();
-        }
-        /// <summary>
-        /// Recupera uma lista de um obj.
-        /// </summary>
-        public IList<TEntity> GetAll() {
-            return _repository.GetAll();
-        }
-        /// <summary>
-        /// Recupera um determinado objeto.
-        /// </summary>
-        /// <param name="obj">Objeto.</param>
-        public TEntity GetById(int id) {
-            return _repository.GetById(id);
-        }
-        /// <summary>
-        /// Remove um objeto T.
-        /// </summary>
-        /// <param name="obj">Objeto.</param>
-        public void Remove(TEntity obj) {
-            _repository.Remove(obj);
-        }
+        }       
 
         /// <summary>
         /// Atualiza um objeto T.
         /// </summary>
         /// <param name="obj">Objeto.</param>
-        public void Update(TEntity obj) {
+        public void Update(T obj) {
             _repository.Update(obj);
         }
     }
