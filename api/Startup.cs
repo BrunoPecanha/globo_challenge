@@ -19,10 +19,13 @@ namespace api {
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
             var dbConnectionString = Configuration.GetConnectionString("sqlLiteConnection");
-            services.AddDbContextPool<SceneContext>(options => options.UseSqlite(dbConnectionString));
+            services.AddDbContext<SceneContext>(options => options.UseSqlite(dbConnectionString));
             services.RegisterServices(Configuration.GetConnectionString(dbConnectionString));
             services.AddControllers();
             services.AddSwaggerGen();
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
