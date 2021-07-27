@@ -11,7 +11,7 @@ namespace Pecanha.Domain.Entity {
         /// </summary>
         public DateTime RegisteringDate { get; private set; }
         /// <summary>
-        /// Última atualização do registro.
+        /// Data da última alteração no registro da cena
         /// </summary>
         public DateTime LastUpdate { get; private set; }
     }
