@@ -8,7 +8,7 @@ namespace Pecanha.Domain.Commands {
     /// </summary>
     public class SceneUpdateCommand {
         public int Id { get; set; }
-        public OperationEnum Operation { get; set; }
+        public StateEnum NextState { get; set; }
         public DateTime OperationHour { get; set; }
     }
 }
