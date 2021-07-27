@@ -12,13 +12,20 @@ namespace Pecanha.Repository.EntityConfig {
              .HasKey(x => x.Id);
 
             builder
-            .Property(c => c.RegisteringDate)
-            .HasColumnName("RegisteringDate")
+            .Property(c => c.OperationHour)
+            .HasColumnName("OperationHour")
             .IsRequired();
 
+
             builder
-            .Property(c => c.LastUpdate)
-            .HasColumnName("LastUpdate");
+             .Property(c => c.OperationHour)
+             .HasColumnName("OperationHour")
+             .IsRequired();
+
+
+            builder
+            .Property(c => c.OperationHour)
+            .HasColumnName("OperationHour");
 
             builder
            .Property(c => c.PreviousState)
@@ -33,10 +40,9 @@ namespace Pecanha.Repository.EntityConfig {
             //Relacionamento com a cena
             builder
                 .HasOne(x => x.Scene)
-                .WithMany(x => x.RecordHistory)
-                .HasForeignKey(x => x.SceneId)
+                .WithMany(x => x.RecordHistories)
                 .IsRequired();
-             
+
         }
     }
 }

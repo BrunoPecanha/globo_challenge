@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Pecanha.Repository.Context {
     public class SceneContext : DbContext, ISceneContext {
-        private static string connectionString;
+        private static string connectionString;        
         public SceneContext(DbContextOptions<SceneContext> options, IConfiguration configuration)
-                : base(options) {
+                : base(options) {            
             if (connectionString is null) {
                 // Para acesso do migrations à connectionstring
                 connectionString = configuration.GetSection("ConnectionStrings:sqlLiteConnection").Value;
@@ -20,7 +20,6 @@ namespace Pecanha.Repository.Context {
         public DbSet<RecordHistory> RecordHistory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
-
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SceneContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }

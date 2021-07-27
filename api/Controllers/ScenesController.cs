@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pecanha.Domain;
 using Pecanha.Domain.Commands;
-using Pecanha.Service.Containers;
-using System;
+using Pecanha.Domain.Entity;
+using ScenesApi.DTO;
+using System.Collections.Generic;
 
 namespace api.Controllers {
     [Route("api")]
@@ -16,19 +17,50 @@ namespace api.Controllers {
         }
 
         /// <summary>
-        /// Endpoint para recuperação das cenas cadastradas por id
+        /// Endpoint para recuperação do historico de alterações nas cenas
+        /// </summary>
+        [HttpGet("history")]
+        public IActionResult GetHistory([FromQuery] int id) {
+            List<RecordHistortyDTO> recordList = new List<RecordHistortyDTO>();
+            var ret = _repository.GetRecordHistoryById(id);
+
+            if (ret.Log != null)
+                (ret.Log as List<RecordHistory>).ForEach(x => recordList.Add(new RecordHistortyDTO(x)));
+
+            if (ret.Valid && ret.Log != null)
+                return Ok(recordList);
+            else if (ret.Valid && !ret.Error)
+                return NoContent();
+            else
+                return BadRequest(ret);
+        }
+
+        /// <summary>
+        /// Endpoint para recuperação de cena por id
         /// </summary>
         [HttpGet("id")]
-        public IActionResult Get([FromHeader] int id) {
-            return Ok(_repository.GetById(id));
+        public IActionResult Get([FromQuery] int id) {
+            var ret = _repository.GetById(id);
+            if (ret.Valid && ret.Log != null)
+                return Ok(ret);
+            else if (ret.Valid && !ret.Error)
+                return NoContent();
+            else
+                return BadRequest(ret);
         }
 
         /// <summary>
         /// Endpoint para recuperação das cenas cadastradas
         /// </summary>
         [HttpGet]
-        public IActionResult Get() {
-            return Ok(_repository.GetAll());
+        public IActionResult GetAll([FromQuery] int page = 0, int qtt = 10) {
+            var ret = _repository.GetAll(page, qtt);
+            if (ret.Valid && ret.Log != null)
+                return Ok(ret);
+            else if (ret.Valid && !ret.Error)
+                return NoContent();
+            else
+                return BadRequest(ret);
         }
 
         /// <summary>
@@ -36,31 +68,27 @@ namespace api.Controllers {
         /// </summary>
         [HttpPost]
         public IActionResult Add([FromBody] SceneCreateCommand command) {
-            try {
-                var scene = _service.Create(command);
-                return Ok(
-                   new ContainerResult() {
-                       Id = scene.Id,
-                       Valid = true,
-                       Log = scene
-                   }
-                );
-            } catch (Exception ex) {
-                return BadRequest(
-                    new ContainerResult() {
-                        Valid = false,
-                        Message = ex.Message
-                    }
-                );
-            }
+            var ret = _service.Create(command);
+            if (ret.Valid)
+                return Created(string.Empty, ret);
+            else if (!ret.Valid && !ret.Error)
+                return StatusCode(422, ret);
+            else
+                return BadRequest(ret);
         }
 
         /// <summary>
         /// Endpoint para atualização do estado da cena
         /// </summary>
         [HttpPut]
-        public IActionResult Update([FromQuery] int id, int estado, DateTime operationHour) {
-            return null;
+        public IActionResult Update([FromBody] SceneUpdateCommand command) {
+            var ret = _service.ChangeState(command);
+            if (ret.Valid)
+                return Ok();
+            else if (!ret.Valid && ret.Error)
+                return StatusCode(422, ret);
+            else
+                return BadRequest(ret);
         }
     }
 }

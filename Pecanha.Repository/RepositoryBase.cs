@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pecanha.Domain;
 using Pecanha.Repository.Context;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pecanha.Repository {
 
@@ -18,15 +16,6 @@ namespace Pecanha.Repository {
         public void Dispose() {
             Db.Dispose();
         }
-
-        public IList<T> GetAll() {
-            return Db.Set<T>().ToArray();
-        }
-
-        public T GetById(int id) {
-            return Db.Set<T>().Find(id);
-        }
-
         public void Remove(T obj) {
             Db.Set<T>().Remove(obj);
             Db.SaveChanges();
