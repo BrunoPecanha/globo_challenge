@@ -7,6 +7,60 @@ using Xunit;
 namespace Pecanha.Teste {
     public class SceneTest {
         [Fact]
+        [Trait("Name", "Demon Slayer")]
+        public void Alter_Pendente_To_Preparada_Op_Allowed() {
+            var scene = new Scene("Demon Slayer");
+
+            var updatecommand = new SceneUpdateCommand() {
+                Id = 1,
+                NextState = StateEnum.Preparada,
+                OperationHour = DateTime.Now
+            };
+
+            scene.UpdateState(updatecommand);
+            Assert.True(scene.Erro == ErroEnum.NoError);
+        }
+
+        [Theory]
+        [InlineData(StateEnum.Preparada)]
+        [InlineData(StateEnum.Pendurada)]
+        [Trait("Name", "Onimusha")]
+        public void Alter_Pendente_To_Preparada_And_Pendurada_Op_Allowed(StateEnum value) {
+            var scene = new Scene("Onimusha");           
+            SceneUpdateCommand updatecommand = new SceneUpdateCommand() {
+                Id = 1,
+                NextState = value,
+                OperationHour = DateTime.Now
+            };                   
+
+            scene.UpdateState(updatecommand);
+            Assert.True(scene.Erro == ErroEnum.NoError);
+        }
+
+        [Theory]
+        [InlineData(StateEnum.Gravada)]
+        [InlineData(StateEnum.Pendurada)]
+        [Trait("Name", "God of War")]
+        public void Alter_Preparada_To_Gravada_And_Pendurada_Op_Allowed(StateEnum value) {
+            var scene = new Scene("God of War");
+            SceneUpdateCommand updatecommand = new SceneUpdateCommand() {
+                Id = 1,
+                NextState = StateEnum.Preparada,
+                OperationHour = DateTime.Now
+            };
+            scene.UpdateState(updatecommand);
+
+            updatecommand = new SceneUpdateCommand() {
+                Id = 1,
+                NextState = value,
+                OperationHour = DateTime.Now
+            };
+            scene.UpdateState(updatecommand);
+                       
+            Assert.True(scene.Erro == ErroEnum.NoError);
+        }
+
+        [Fact]
         [Trait("Name", "Stalone Cobra")]
         public void Alter_Pendente_To_Gravada_Op_Not_Allowed() {
             var scene = new Scene("DBZ");
@@ -86,6 +140,36 @@ namespace Pecanha.Teste {
 
             scene.UpdateState(updatecommand);
             Assert.True(scene.Erro == ErroEnum.FutureAlterNotAllowed);
+        }
+
+        [Fact]
+        [Trait("Name", "Avangers")]
+        public void Alter_Gravada_To_Pendurada_Op_Not_Allowed() {
+            var scene = new Scene("Avangers");
+
+            #region Prepara o ambiente para o teste
+            var updatecommand = new SceneUpdateCommand() {
+                Id = 1,
+                NextState = StateEnum.Preparada,
+                OperationHour = DateTime.Now
+            };
+            scene.UpdateState(updatecommand);
+
+            updatecommand = new SceneUpdateCommand() {
+                Id = 1,
+                NextState = StateEnum.Gravada,
+                OperationHour = DateTime.Now
+            };
+            scene.UpdateState(updatecommand);
+            #endregion
+
+            updatecommand = new SceneUpdateCommand() {
+                Id = 1,
+                NextState = StateEnum.Pendurada,
+                OperationHour = DateTime.Now
+            };
+            scene.UpdateState(updatecommand);
+            Assert.True(scene.Erro == ErroEnum.OpNotAllowed);
         }
     }
 }
