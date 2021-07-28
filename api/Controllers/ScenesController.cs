@@ -56,7 +56,7 @@ namespace api.Controllers {
         /// Endpoint para recuperação das cenas cadastradas
         /// </summary>
         [HttpGet]
-        public IActionResult GetAll([FromQuery] int page = 0, int qtt = 10) {
+        public IActionResult GetAll([FromQuery] int page = 1, int qtt = 10) {
             var ret = _sceneRepository.GetAll(page, qtt);
             if (ret.Valid && ret.Log != null)
                 return Ok(ret);
