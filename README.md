@@ -3,7 +3,7 @@
 Api com intuito de controlar a gravação de uma lista de cenas. 
 
 ## Configuração
-- Para atendimento do requisito F5, é necessário configurar um email de disparo e um recebimento de avisos no appsettings;
+- Para atendimento do requisito F5, é necessário configurar um email de disparo e um de recebimento de avisos no appsettings;
 
 ### Info
 O BD está localizado na pasta da aplicação
