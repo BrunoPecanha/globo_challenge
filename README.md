@@ -1,8 +1,6 @@
 # Desafio - Globo
 
-É necessário controlar a gravação de uma lista de cenas. Para isso, nossa aplicação
-deve se comportar de acordo com o seguinte diagrama:
-
+Api com intuito de controlar a gravação de uma lista de cenas. 
 
 ## Configuração
 - Para atendimento do requisito F5, é necessário configurar um email de disparo e um recebimento de avisos no appsettings;
