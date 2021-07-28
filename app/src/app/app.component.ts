@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Scene } from './model/Scene';
+import { SceneService } from './service/scence.service';
 
 
 @Component({
@@ -13,8 +14,9 @@ export class AppComponent {
   public title = 'Controle de Cenas';
   public scenes: Scene[] = [];
   public form!: FormGroup;
+  public _service: SceneService;
 
-  constructor(private fb: FormBuilder) {   
+  constructor(private fb: FormBuilder, service: SceneService) {   
     this.form = this.fb.group({
       title: ['', Validators.compose([
         Validators.minLength(3),
@@ -22,6 +24,7 @@ export class AppComponent {
         Validators.required
       ])]
     });
+    this._service = service;
     this.carregar();
   }
 
@@ -55,10 +58,9 @@ export class AppComponent {
     return new Scene(1, 1, "", new Date());
   }
 
-  carregar(){
-    const dado = localStorage.getItem('scenes');
-    if (dado)
-      this.scenes = JSON.parse(dado)
+  carregar(){    
+    // Popular a lista 
+    const dado = this._service.getScenes(0, 100);
   }
 
   changeMode(mode: string){
