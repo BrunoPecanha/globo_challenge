@@ -21,9 +21,18 @@ namespace Pecanha.Repository.EntityConfig {
              .HasColumnName("LastUpdate")
              .IsRequired();
 
+
+            builder
+             .Property(c => c.OperationHour)
+             .HasColumnName("OperationHour")
+             .IsRequired();
+
             builder
             .Property(c => c.Name)
-            .HasColumnName("Name");        
+            .HasColumnName("Name");
+
+            builder
+            .Ignore(c => c.Erro);
 
             builder
            .Property(c => c.State)
