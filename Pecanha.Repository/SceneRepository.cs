@@ -20,7 +20,7 @@ namespace Pecanha.Repository {
         //F2. Listar cenas com seus estados atuais;
         public CommandResult GetAll(int? page, int? qtd) {
             try {
-                var scene = _dbContext.Scene.Skip((int)page * (int)qtd)
+                var scene = _dbContext.Scene.Skip(((int)page-1) * (int)qtd)
                                             .Take((int)qtd)
                                             .OrderByDescending(x => x.RegisteringDate)
                                             .AsNoTracking()
