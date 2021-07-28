@@ -1,0 +1,65 @@
+<h1 class="title animated jackInTheBox">{{ title }}</h1>
+<ul class="animate flipInX"  *ngIf="mode=='list'">
+  <p class="text-center" *ngIf="scenes.length==0">
+    <small>
+      Não existem cenas cadastradas até o momento.
+    </small>
+  </p>
+
+  <li *ngFor="let scene of scenes"> {{ scene.name }} | Status: {{ scene.state }}  
+   
+      <span style="display: flex; justify-content: flex-end">
+        <button  type="button" class="btn btn-info ml-1" data-toggle="modal" data-target="#modalHistorico">     
+          Ver histórico
+        </button> 
+        <span class="ml-2">
+          <button type="button" class="btn btn-warning mr-1"  data-toggle="tooltip" title="Desfazer Status Atual"><i class="fas fa-arrow-circle-left"></i></button> 
+          <button type="button" class="btn btn-primary" ata-toggle="tooltip" title="Alterar Status Atual"><i class="fas fa-arrow-circle-right"></i></button>
+        </span>  
+    </span>        
+  </li> 
+</ul>
+
+<div id="modal" *ngIf="mode == 'add'" class="animated flipInX">
+  <form [formGroup]="form">
+      <label for="">Nome da Cena </label>
+      <input type="text"  formControlName="title">
+      <small class="danger" *ngIf="form.controls.title.invalid && !form.controls.title.pristine">Campo com mínimo de 3 e máximo de 14 caracteres<br></small>
+      <p class="text-center">
+        <button class="button" [disabled]="form.invalid" (click)="incluir()"><i class="far fa-save"></i> Gravar</button>
+      </p>  
+    </form>-
+</div>
+
+<button class="add-button animated fadeInUp button mr-2" (click)="changeMode('add')" *ngIf="mode=='list'">
+  <i class="fa fa-plus-circle"></i>
+  Nova Cena
+</button>
+<button class="add-button animated fadeInUp button " (click)="cleanData()" *ngIf="mode=='list'">
+  <i class="fas fa-trash"></i>
+  Zerar Cenas
+</button>
+<button class="add-button animated fadeInUp button" (click)="changeMode('list')" *ngIf="mode=='add'">
+  <i class="fas fa-list"></i>
+  Visualizar Cenas Cadastradas
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalHistorico" tabindex="-1" role="dialog" aria-labelledby="modalHistoricoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalHistorico">Histórico de alterações de status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="bbtn btn-success" data-dismiss="modal">Fechar</button>       
+      </div>
+    </div>
+  </div>
+</div>
