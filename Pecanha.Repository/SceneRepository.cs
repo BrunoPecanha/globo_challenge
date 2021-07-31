@@ -9,7 +9,6 @@ using System.Linq;
 namespace Pecanha.Repository {
     public class SceneRepository : RepositoryBase<Scene>, ISceneRepository {
         private readonly ISceneContext _dbContext;
-        private const string _msgNoChanges = "Não foram encontrados registros de alteração de estado desta cena";
         private string _msgNotFoundById = "Não foi encontrado registro com id: {0}";
         private const string _msgNotFound = "Não foram encontrados registros";
 

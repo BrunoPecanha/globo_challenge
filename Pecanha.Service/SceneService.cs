@@ -43,9 +43,14 @@ namespace Pecanha.Service {
           preparada. */
         public CommandResult ChangeState(SceneUpdateCommand sceneCommand) {
             try {
-                var scene = _sceneRepository.GetById(sceneCommand.Id).Log as Scene;
-                _recordRepository.Add(new RecordHistory(scene.Id, scene.State, sceneCommand.NextState, sceneCommand.OperationHour));
 
+                var result = _sceneRepository.GetById(sceneCommand.Id);
+                if (result is null)
+                    return result;
+
+                var scene = result.Log as Scene;
+
+                _recordRepository.Add(new RecordHistory(scene.Id, scene.State, sceneCommand.NextState, sceneCommand.OperationHour));
                 scene.UpdateState(sceneCommand);
 
                 if (scene.Erro == ErroEnum.FutureAlterNotAllowed)
