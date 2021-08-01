@@ -18,8 +18,8 @@ namespace Pecanha.Domain.DTO {
             };
 
             this.ActualState = new State() {
-                StateDesc = history.ActualState.ToString(),
-                StateId = (int)history.ActualState
+                StateDesc = history.CurrentState.ToString(),
+                StateId = (int)history.CurrentState
             };
         }
 

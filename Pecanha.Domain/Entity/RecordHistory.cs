@@ -6,14 +6,14 @@ namespace Pecanha.Domain.Entity {
 
         public RecordHistory(int sceneId) {
             PreviousState = StateEnum.Pendente;
-            ActualState = StateEnum.Pendente;
+            CurrentState = StateEnum.Pendente;
             OperationHour = DateTime.Now;
             SceneId = sceneId;
         }
 
         public RecordHistory(int sceneId, StateEnum actualState, StateEnum nextState, DateTime opHour) {           
             PreviousState = actualState;
-            ActualState = nextState;
+            CurrentState = nextState;
             OperationHour = opHour;
             SceneId = sceneId;
         }
@@ -21,14 +21,14 @@ namespace Pecanha.Domain.Entity {
         public int Id { get; set; }
         public DateTime OperationHour { get; private set; }
         public StateEnum PreviousState { get; private set; }
-        public StateEnum ActualState { get; private set; }
+        public StateEnum CurrentState { get; private set; }
         public Scene Scene { get; private set; }
         public int SceneId { get; private set; }
 
 
         public void UpdateRecord(StateEnum nextState, DateTime opHour) {
-            this.PreviousState = this.ActualState;
-            this.ActualState = nextState;
+            this.PreviousState = this.CurrentState;
+            this.CurrentState = nextState;
             this.OperationHour = opHour;
         }
     }

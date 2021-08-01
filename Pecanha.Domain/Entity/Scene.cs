@@ -42,8 +42,8 @@ namespace Pecanha.Domain.Entity {
             this.State = sceneCommand.NextState;
             this.OperationHour = sceneCommand.OperationHour;
         }
-        private bool IsUndoOperation(StateEnum actual, StateEnum next) {
-            return actual != StateEnum.Pendente && (next == StateEnum.Pendente || next == StateEnum.Preparada);
+        private bool IsUndoOperation(StateEnum current, StateEnum next) {
+            return current != StateEnum.Pendente && (next == StateEnum.Pendente || next == StateEnum.Preparada);
         }
     }
 }

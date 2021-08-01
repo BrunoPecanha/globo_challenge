@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pecanha.Repository.Context;
 
 namespace Pecanha.Repository.Migrations
 {
     [DbContext(typeof(SceneContext))]
-    partial class SceneContextModelSnapshot : ModelSnapshot
+    [Migration("20210801025624_atualizaNomeVariaveis")]
+    partial class atualizaNomeVariaveis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
