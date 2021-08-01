@@ -33,8 +33,8 @@ namespace Pecanha.Repository.EntityConfig {
            .HasConversion<int>();
 
             builder
-           .Property(c => c.ActualState)
-           .HasColumnName("ActualState")
+           .Property(c => c.CurrentState)
+           .HasColumnName("CurrentState")
            .HasConversion<int>();
 
             //Relacionamento com a cena
