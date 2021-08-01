@@ -13,6 +13,7 @@ namespace Pecanha.Service {
         private const string _msgFutureAlterNotAllowed = "Não é permitido inserir uma operação de alteração de estado no futuro";
         private const string _msgCantUndoOperation = "Não é permitido desfazer uma operação de alteração de estado que foi realizada há mais de 5 minutos.";
         private string _msgOpNotAllowed = "Não é permitido alterar diretamente de {0} para {1}";
+        private string _msgInvalidState = "Não existe um estado com o identificador {0}";
 
         public SceneService(ISceneRepository repository, IRecordHistoryRepository recordRepository)
             : base(repository) {
@@ -59,6 +60,8 @@ namespace Pecanha.Service {
                     return new CommandResult(false, false, string.Format(_msgOpNotAllowed, scene.State, sceneCommand.NextState), null);
                 else if (scene.Erro == ErroEnum.CantUndoOperation)
                     return new CommandResult(false, false, _msgCantUndoOperation, null);
+                else if (scene.Erro == ErroEnum.InvalidState)
+                    return new CommandResult(false, false, string.Format(_msgInvalidState, sceneCommand.NextState), null);
 
                 _sceneRepository.Update(scene);
 
