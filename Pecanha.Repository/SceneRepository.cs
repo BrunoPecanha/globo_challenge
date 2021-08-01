@@ -43,7 +43,7 @@ namespace Pecanha.Repository {
                                       .FirstOrDefault(x => x.Id == id);
 
                 if (scene is null) {
-                    return new CommandResult(false, false, string.Format(_msgNotFoundById, id), null);
+                    return new CommandResult(true, false, string.Format(_msgNotFoundById, id), null);
                 }
 
                 return new CommandResult(true, false, string.Empty, scene);

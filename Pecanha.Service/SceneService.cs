@@ -54,11 +54,11 @@ namespace Pecanha.Service {
                 scene.UpdateState(sceneCommand);
 
                 if (scene.Erro == ErroEnum.FutureAlterNotAllowed)
-                    return new CommandResult(false, true, _msgFutureAlterNotAllowed, null);
+                    return new CommandResult(false, false, _msgFutureAlterNotAllowed, null);
                 else if (scene.Erro == ErroEnum.OpNotAllowed)
-                    return new CommandResult(false, true, string.Format(_msgOpNotAllowed, scene.State, sceneCommand.NextState), null);
+                    return new CommandResult(false, false, string.Format(_msgOpNotAllowed, scene.State, sceneCommand.NextState), null);
                 else if (scene.Erro == ErroEnum.CantUndoOperation)
-                    return new CommandResult(false, true, _msgCantUndoOperation, null);
+                    return new CommandResult(false, false, _msgCantUndoOperation, null);
 
                 _sceneRepository.Update(scene);
 

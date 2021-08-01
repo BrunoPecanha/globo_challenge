@@ -1,7 +1,7 @@
 ﻿using Pecanha.Domain.Entity;
 using System;
 
-namespace ScenesApi.DTO {
+namespace Pecanha.Domain.DTO {
     public class RecordHistortyDTO {
         public int SceneId { get; set; }
         public State ActualState { get; set; }
