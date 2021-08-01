@@ -27,7 +27,9 @@ namespace Pecanha.Domain.Entity {
             //3. Não deve ser permitido desfazer uma operação de alteração de estado que foi realizada há mais de 5 minutos. (opcional)
             else if (sceneCommand.OperationHour.Subtract(this.OperationHour).TotalMinutes > 5 && this.IsUndoOperation(this.State, sceneCommand.NextState)) {
                 this.Erro = ErroEnum.CantUndoOperation;
-            }                
+            } 
+            else if (!System.Enum.IsDefined(typeof(StateEnum), sceneCommand.NextState))
+                this.Erro = ErroEnum.InvalidState;
 
             if (this.State == StateEnum.Pendente && sceneCommand.NextState == StateEnum.Gravada) {
                 this.Erro = ErroEnum.OpNotAllowed;

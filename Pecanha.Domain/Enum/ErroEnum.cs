@@ -9,6 +9,8 @@ namespace Pecanha.Domain.Enum {
         [Description("Operation Not Allowed")]
         OpNotAllowed = 2,
         [Description("Can't Undo Operation")]
-        CantUndoOperation = 3        
+        CantUndoOperation = 3,
+        [Description("Invalid State")]
+        InvalidState = 4
     }
 }
