@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pecanha.Domain;
 using Pecanha.Domain.Commands;
-using Pecanha.Domain.Entity;
-using ScenesApi.DTO;
-using System.Collections.Generic;
 
 namespace api.Controllers {
     [Route("api")]
@@ -23,15 +20,11 @@ namespace api.Controllers {
         /// Endpoint para recuperação do historico de alterações nas cenas
         /// </summary>
         [HttpGet("history")]
-        public IActionResult GetHistory([FromQuery] int id) {
-            List<RecordHistortyDTO> recordList = new List<RecordHistortyDTO>();
+        public IActionResult GetHistory([FromQuery] int id) {         
             var ret = _recordHistoryRepository.GetRecordHistoryById(id);
 
-            if (ret.Log != null)
-                (ret.Log as List<RecordHistory>).ForEach(x => recordList.Add(new RecordHistortyDTO(x)));
-
-            if (ret.Valid && ret.Log != null)
-                return Ok(recordList);
+            if (ret.Valid && !ret.Error && ret.Log != null)
+                return Ok(ret);
             else if (ret.Valid && !ret.Error)
                 return NoContent();
             else
@@ -44,9 +37,9 @@ namespace api.Controllers {
         [HttpGet("id")]
         public IActionResult Get([FromQuery] int id) {
             var ret = _sceneRepository.GetById(id);
-            if (ret.Valid && ret.Log != null)
+            if (ret.Valid && !ret.Error && ret.Log != null)
                 return Ok(ret);
-            else if (ret.Valid && !ret.Error)
+            if (ret.Valid && !ret.Error)
                 return NoContent();
             else
                 return BadRequest(ret);
@@ -58,7 +51,7 @@ namespace api.Controllers {
         [HttpGet]
         public IActionResult GetAll([FromQuery] int page = 1, int qtt = 10) {
             var ret = _sceneRepository.GetAll(page, qtt);
-            if (ret.Valid && ret.Log != null)
+            if (ret.Valid && !ret.Error && ret.Log != null)
                 return Ok(ret);
             else if (ret.Valid && !ret.Error)
                 return NoContent();
@@ -88,7 +81,7 @@ namespace api.Controllers {
             var ret = _service.ChangeState(command);
             if (ret.Valid)
                 return Ok();
-            else if (!ret.Valid && ret.Error)
+            else if (!ret.Valid && !ret.Error)
                 return StatusCode(422, ret);
             else
                 return BadRequest(ret);

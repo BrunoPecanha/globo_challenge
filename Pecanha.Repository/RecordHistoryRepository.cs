@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pecanha.Domain;
 using Pecanha.Domain.Commands;
+using Pecanha.Domain.DTO;
 using Pecanha.Domain.Entity;
 using Pecanha.Repository.Context;
 using System;
@@ -22,6 +23,7 @@ namespace Pecanha.Repository {
                                         .Where(x => x.SceneId == id)
                                         .OrderByDescending(x => x.OperationHour)
                                         .AsNoTracking()
+                                        .Select(x => new RecordHistortyDTO(x))
                                         .ToList();
 
                 if (history.Count() < 1) {

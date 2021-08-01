@@ -75,6 +75,21 @@ namespace Pecanha.Teste {
             Assert.True(scene.Erro == ErroEnum.OpNotAllowed);
         }
 
+        [Fact]
+        [Trait("Name", "Ragnarok")]
+        public void Alter_To_Invalid_State_Op_Not_Allowed() {
+            var scene = new Scene("Ragnarok");
+
+            var updatecommand = new SceneUpdateCommand() {
+                Id = 1,
+                NextState = (StateEnum)6,
+                OperationHour = DateTime.Now
+            };
+
+            scene.UpdateState(updatecommand);
+            Assert.True(scene.Erro == ErroEnum.InvalidState);
+        }
+
         [Theory]
         [InlineData(StateEnum.Gravada)]
         [InlineData(StateEnum.Pendente)]
