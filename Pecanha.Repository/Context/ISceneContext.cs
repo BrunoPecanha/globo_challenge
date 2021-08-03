@@ -5,5 +5,6 @@ namespace Pecanha.Repository.Context {
     public interface ISceneContext {
         DbSet<Scene> Scene { get; }
         DbSet<RecordHistory> RecordHistory { get; }
+        int SaveChanges();
     }
 }

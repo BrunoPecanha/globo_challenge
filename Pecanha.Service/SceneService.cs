@@ -2,12 +2,14 @@
 using Pecanha.Domain.Commands;
 using Pecanha.Domain.Entity;
 using Pecanha.Domain.Enum;
+using Pecanha.Repository.Context;
 using Pecanha.Service.Handlers;
 using System;
 
 namespace Pecanha.Service {
     public class SceneService : ServiceBase<Scene>, ISceneService {
         private readonly ISceneRepository _sceneRepository;
+        private readonly ISceneContext _sceneContext;
         private readonly IRecordHistoryRepository _recordRepository;
         private const string _msgNoNameProvided = "Nome não informado";
         private const string _msgFutureAlterNotAllowed = "Não é permitido inserir uma operação de alteração de estado no futuro";
@@ -15,10 +17,11 @@ namespace Pecanha.Service {
         private string _msgOpNotAllowed = "Não é permitido alterar diretamente de {0} para {1}";
         private string _msgInvalidState = "Não existe um estado com o identificador {0}";
 
-        public SceneService(ISceneRepository repository, IRecordHistoryRepository recordRepository)
+        public SceneService(ISceneRepository repository, IRecordHistoryRepository recordRepository, ISceneContext sceneContext)
             : base(repository) {
             _sceneRepository = repository;
             _recordRepository = recordRepository;
+            _sceneContext = sceneContext;
         }
 
         public CommandResult Create(SceneCreateCommand sceneCommand) {
@@ -49,7 +52,10 @@ namespace Pecanha.Service {
                 if (result is null)
                     return result;
 
-                var scene = result.Log as Scene;               
+                var scene = result.Log as Scene;
+
+                _sceneContext.RecordHistory.Add(new RecordHistory(scene.Id, scene.State, sceneCommand.NextState, sceneCommand.OperationHour));
+                
                 scene.UpdateState(sceneCommand);
 
                 if (scene.Erro == ErroEnum.FutureAlterNotAllowed)
@@ -61,8 +67,9 @@ namespace Pecanha.Service {
                 else if (scene.Erro == ErroEnum.InvalidState)
                     return new CommandResult(false, false, string.Format(_msgInvalidState, sceneCommand.NextState), null);
 
-                _sceneRepository.Update(scene);
-                _recordRepository.Add(new RecordHistory(scene.Id, scene.State, sceneCommand.NextState, sceneCommand.OperationHour));
+                
+                _sceneContext.Scene.Update(scene);
+                _sceneContext.SaveChanges();
 
                 //F5. Implementar mecanismo de tempo real para acompanhamento do estado atual da gravação.
                 EmailHandler.SendEmail(scene);
