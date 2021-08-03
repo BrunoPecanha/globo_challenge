@@ -1,4 +1,4 @@
-# Desafio - Globo
+# Desafio -
 
 Api com intuito de controlar a gravação de uma lista de cenas. 
 
