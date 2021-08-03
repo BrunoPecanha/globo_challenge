@@ -49,9 +49,7 @@ namespace Pecanha.Service {
                 if (result is null)
                     return result;
 
-                var scene = result.Log as Scene;
-
-                _recordRepository.Add(new RecordHistory(scene.Id, scene.State, sceneCommand.NextState, sceneCommand.OperationHour));
+                var scene = result.Log as Scene;               
                 scene.UpdateState(sceneCommand);
 
                 if (scene.Erro == ErroEnum.FutureAlterNotAllowed)
@@ -64,6 +62,7 @@ namespace Pecanha.Service {
                     return new CommandResult(false, false, string.Format(_msgInvalidState, sceneCommand.NextState), null);
 
                 _sceneRepository.Update(scene);
+                _recordRepository.Add(new RecordHistory(scene.Id, scene.State, sceneCommand.NextState, sceneCommand.OperationHour));
 
                 //F5. Implementar mecanismo de tempo real para acompanhamento do estado atual da gravação.
                 EmailHandler.SendEmail(scene);
